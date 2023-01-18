@@ -12,7 +12,7 @@
 namespace Silex;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * Wraps view listeners.
@@ -36,22 +36,25 @@ class ViewListenerWrapper
         $this->callback = $callback;
     }
 
-    public function __invoke(GetResponseForControllerResultEvent $event)
+    public function __invoke(ControllerEvent $event)
     {
-        $controllerResult = $event->getControllerResult();
-        $callback = $this->app['callback_resolver']->resolveCallback($this->callback);
 
-        if (!$this->shouldRun($callback, $controllerResult)) {
-            return;
-        }
-
-        $response = call_user_func($callback, $controllerResult, $event->getRequest());
-
-        if ($response instanceof Response) {
-            $event->setResponse($response);
-        } elseif (null !== $response) {
-            $event->setControllerResult($response);
-        }
+        error_log('Should be implemented but it is not.');
+//        $controllerResult = $event->getControllerResult();
+//
+//        $callback = $this->app['callback_resolver']->resolveCallback($this->callback);
+//
+//        if (!$this->shouldRun($callback, $controllerResult)) {
+//            return;
+//        }
+//
+//        $response = call_user_func($callback, $controllerResult, $event->getRequest());
+//
+//        if ($response instanceof Response) {
+//            $event->setResponse($response);
+//        } elseif (null !== $response) {
+//            $event->setControllerResult($response);
+//        }
     }
 
     private function shouldRun($callback, $controllerResult)
