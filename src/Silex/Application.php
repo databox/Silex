@@ -275,9 +275,9 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
         $app = $this;
 
         $this->on(KernelEvents::RESPONSE, function (ResponseEvent $event) use ($callback, $app) {
-            if (!$event->isMasterRequest()) {
-                return;
-            }
+//            if (!$event->isMasterRequest()) {
+//                return;
+//            }
 
             $response = call_user_func($app['callback_resolver']->resolveCallback($callback), $event->getRequest(), $event->getResponse(), $app);
             if ($response instanceof Response) {
