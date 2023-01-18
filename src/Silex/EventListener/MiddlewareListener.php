@@ -12,6 +12,7 @@
 namespace Silex\EventListener;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -59,12 +60,7 @@ class MiddlewareListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * Runs after filters.
-     *
-     * @param FilterResponseEvent $event The event to handle
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         $request = $event->getRequest();
         $routeName = $request->attributes->get('_route');
