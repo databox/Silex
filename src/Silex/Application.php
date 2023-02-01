@@ -17,6 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -298,7 +299,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
     {
         $app = $this;
 
-        $this->on(KernelEvents::TERMINATE, function (ResponseEvent $event) use ($callback, $app) {
+        $this->on(KernelEvents::TERMINATE, function (TerminateEvent $event) use ($callback, $app) {
             call_user_func($app['callback_resolver']->resolveCallback($callback), $event->getRequest(), $event->getResponse(), $app);
         }, $priority);
     }
