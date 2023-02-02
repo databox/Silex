@@ -54,7 +54,7 @@ class LogListener implements EventSubscriberInterface
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -68,7 +68,7 @@ class LogListener implements EventSubscriberInterface
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
