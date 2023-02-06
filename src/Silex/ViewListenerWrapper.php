@@ -12,7 +12,8 @@
 namespace Silex;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Wraps view listeners.
@@ -36,9 +37,10 @@ class ViewListenerWrapper
         $this->callback = $callback;
     }
 
-    public function __invoke(GetResponseForControllerResultEvent $event)
+    public function __invoke(RequestEvent $event)
     {
         $controllerResult = $event->getControllerResult();
+
         $callback = $this->app['callback_resolver']->resolveCallback($this->callback);
 
         if (!$this->shouldRun($callback, $controllerResult)) {
